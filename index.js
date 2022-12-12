@@ -38,11 +38,11 @@ mongoose.connect(process.env.MONGO_URL, {
 
 
 const io = socket(server,{
-    cors: {
-        origin: "https://chatloveu.netlify.app",
-        credentials: true,
-    },
-});
+    allowRequest: (req, callback) => {
+      const noOriginHeader = req.headers.origin === undefined;
+      callback(null, noOriginHeader);
+    }
+  });
 //store all online users inside this map
 global.onlineUsers =  new Map();
  
